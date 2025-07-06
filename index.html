@@ -3,9 +3,135 @@
 <html>
 <head>
     <title>Business Empire: Richman</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+    <style>
+        :root {
+            --primary-color: #4a1c82;
+            --secondary-color: #2a0845;
+            --accent-color: #7b1fa2;
+            --text-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            font-family: 'Arial', sans-serif;
+            animation: backgroundShift 15s ease infinite;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-out, pulse 4s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+            animation-delay: calc(var(--n) * 0.2s);
+        }
+
+        .form-group:nth-child(1) { --n: 1; }
+        .form-group:nth-child(2) { --n: 2; }
+        .form-group:nth-child(3) { --n: 3; }
+
+        label {
+            display: block;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 2px var(--accent-color);
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 25px;
+            background: var(--accent-color);
+            color: var(--text-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes backgroundShift {
+            0% {
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            }
+            50% {
+                background: linear-gradient(225deg, var(--secondary-color), var(--primary-color));
+            }
+            100% {
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            }
+        }
+    </style>
     <div class="container">
         <div class="login-container">
             <h1>Business Empire: Richman</h1>
