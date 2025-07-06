@@ -1,49 +1,101 @@
 /* js/login.js */
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    // Tab switching
+    const tabs = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
     
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const remember = document.getElementById('rememberLogin').checked;
-    
-    // Add fade out animation before transition
-    document.querySelector('.login-container').style.animation = 'fadeOut 0.5s ease-out forwards';
-    
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    try {
-        const response = await fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            // Add active class to clicked tab
+            tab.classList.add('active');
+            
+            // Show/hide remember me checkbox
+            const rememberMe = document.querySelector('.remember-me');
+            if (tab.dataset.tab === 'login') {
+                rememberMe.classList.add('visible');
+            } else {
+                rememberMe.classList.remove('visible');
+            }
+            
+            // Show/hide tab contents
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.dataset.tab === tab.dataset.tab) {
+                    content.classList.add('active');
+                }
+            });
         });
+    });
+
+    // Login form handling
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
         
-        const data = await response.json();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const remember = document.getElementById('rememberLogin').checked;
         
-        if (remember) {
-            localStorage.setItem('loginInfo', JSON.stringify({
-                username,
-                token: data.token
-            }));
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+            
+            const data = await response.json();
+            
+            if (remember) {
+                localStorage.setItem('loginInfo', JSON.stringify({
+                    username,
+                    token: data.token
+                }));
+            }
+            
+            window.location.href = '/welcome';
+        } catch (error) {
+            console.error('Login failed:', error);
+            alert('Login failed. Please try again.');
+        }
+    });
+
+    // Signup form handling
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const username = document.getElementById('signup-username').value;
+        const password = document.getElementById('signup-password').value;
+        const confirmPassword = document.getElementById('signup-confirm-password').value;
+        
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
         }
         
-        window.location.href = '/welcome';
-    } catch (error) {
-        console.error('Login failed:', error);
-        alert('Login failed. Please try again.');
-        // Reset fade out animation
-        document.querySelector('.login-container').style.animation = 'fadeIn 0.5s ease-out forwards';
-    }
-});
+        try {
+            const response = await fetch('/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+            
+            const data = await response.json();
+            window.location.href = '/welcome';
+        } catch (error) {
+            console.error('Signup failed:', error);
+            alert('Signup failed. Please try again.');
+        }
+    });
 
-// Check for saved login info
-document.addEventListener('DOMContentLoaded', () => {
+    // Check for saved login info
     const savedLogin = localStorage.getItem('loginInfo');
     if (savedLogin) {
         const { username, token } = JSON.parse(savedLogin);
-        // Auto-login with saved credentials
         window.location.href = '/welcome';
     }
 });
