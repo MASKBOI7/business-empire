@@ -1,9 +1,15 @@
+// login.js
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const remember = document.getElementById('rememberLogin').checked;
+    
+    // Add fade out animation before transition
+    document.querySelector('.login-container').style.animation = 'fadeOut 0.5s ease-out forwards';
+    
+    await new Promise(resolve => setTimeout(resolve, 500));
     
     try {
         const response = await fetch('/login', {
@@ -27,6 +33,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     } catch (error) {
         console.error('Login failed:', error);
         alert('Login failed. Please try again.');
+        // Reset fade out animation
+        document.querySelector('.login-container').style.animation = 'fadeIn 0.5s ease-out forwards';
     }
 });
 
