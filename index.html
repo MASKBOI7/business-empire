@@ -41,10 +41,11 @@
             animation: fadeIn 0.5s ease-out;
         }
 
-        .tabs {
+        .tab-buttons {
             display: flex;
             gap: 1rem;
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .tab-button {
@@ -55,10 +56,24 @@
             color: var(--text-color);
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .tab-button.active {
             background: var(--accent-color);
+            z-index: 2;
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
         }
 
         .form-group {
@@ -85,98 +100,4 @@
             border: none;
             border-radius: var(--border-radius);
             background: rgba(255, 255, 255, 0.2);
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-
-        input:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 0 2px var(--accent-color);
-        }
-
-        button {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: var(--border-radius);
-            background: var(--accent-color);
-            color: var(--text-color);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin: 1rem 0;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .remember-me.visible {
-            opacity: 1;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                width: 95%;
-                padding: 1.5rem;
-            }
-        }
-    </style>
-    <div class="container">
-        <div class="login-container">
-            <div class="tabs">
-                <button class="tab-button active" data-tab="login">Login</button>
-                <button class="tab-button" data-tab="signup">Signup</button>
-            </div>
-            <form id="loginForm" class="tab-content active">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" required>
-                </div>
-                <div class="remember-me">
-                    <input type="checkbox" id="rememberLogin">
-                    <label for="rememberLogin">Remember Login Info</label>
-                </div>
-                <button type="submit">Login</button>
-            </form>
-            <form id="signupForm" class="tab-content">
-                <div class="form-group">
-                    <label for="signup-username">Username:</label>
-                    <input type="text" id="signup-username" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-password">Password:</label>
-                    <input type="password" id="signup-password" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-confirm-password">Confirm Password:</label>
-                    <input type="password" id="signup-confirm-password" required>
-                </div>
-                <button type="submit">Signup</button>
-            </form>
-        </div>
-    </div>
-    <script src="js/login.js"></script>
-</body>
-</html>
+            color: var(--text
